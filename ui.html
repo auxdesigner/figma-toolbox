@@ -1,0 +1,180 @@
+<style>
+    * {
+        font-family: 'Proxima Nova', -apple-system, Helvetica, Arial, sans-serif;
+    }
+    
+    body {
+        margin: 16px;
+    }
+    
+    h4 {
+        margin-bottom: 10px;
+        margin-top: 10px;
+        font-weight: normal;
+        font-size: 14px;
+    }
+    
+    hr {
+        opacity: 0.2;
+    }
+    
+    button {
+        background: #e8f0f2;
+        font-size: 12px;
+        color: #344043;
+        border: none;
+        border-radius: 2px;
+        cursor: pointer;
+        padding: 6px 8px;
+        margin-bottom: 10px;
+    }
+    
+    button:focus {
+        outline: none;
+    }
+    
+    button:hover {
+        background: #c9d8db;
+    }
+    
+    input {
+        padding: 4px;
+        border: 1px solid #c9d8db;
+        outline: none;
+        border-radius: 2px;
+        font-size: 12px;
+    }
+    
+    input:focus {
+        border: 1px solid #5293ff;
+    }
+    
+    .space-top {
+        margin-top: 6px;
+    }
+    
+    .space-left {
+        margin-left: 16px;
+    }
+    
+    .ui {
+        margin-left: 24px;
+    }
+</style>
+
+<h4 class="trigger">🛰️ Select instances of remote library</h4>
+<div class="ui">
+    <button id="find">Select</button>
+</div>
+
+<hr>
+
+<h4 class="trigger">🔍 Select layers by name</h4>
+<div class="ui">
+    <input placeholder="Layer name" type="text" id="name" name="name">
+    <button id="select">Select</button>
+</div>
+
+<hr>
+
+<h4 class="trigger">✏️ Generate text from string</h4>
+<div class="ui">
+    <input placeholder="Base string" type="text" id="string" name="string">
+    <!-- <button id="generate">Exact string</button> -->
+    <br><button id="base" class="space-top">String only</button>
+    <button id="order">+ Ordered #</button>
+    <button id="random">+ Random #</button><br>
+</div>
+
+<hr>
+
+<h4 class="trigger">🔢 Generate numbers</h4>
+<div class="ui">
+    <button id="num">Integer</button>
+    <button id="percentage">Percentage</button>
+</div>
+
+
+<script>
+    document.getElementById('find').onclick = () => {
+        parent.postMessage({
+            pluginMessage: {
+                type: 'find'
+            }
+        }, '*')
+    }
+
+    document.getElementById('select').onclick = () => {
+        const textbox = document.getElementById('name');
+        const name = textbox.value;
+        parent.postMessage({
+            pluginMessage: {
+                type: 'select',
+                name
+            }
+        }, '*')
+    }
+
+    document.getElementById('base').onclick = () => {
+        const textbox = document.getElementById('string');
+        const string = textbox.value;
+        parent.postMessage({
+            pluginMessage: {
+                type: 'base',
+                string
+            }
+        }, '*')
+    }
+
+    document.getElementById('random').onclick = () => {
+        const textbox = document.getElementById('string');
+        const string = textbox.value;
+        parent.postMessage({
+            pluginMessage: {
+                type: 'random',
+                string
+            }
+        }, '*')
+    }
+
+    document.getElementById('order').onclick = () => {
+        const textbox = document.getElementById('string');
+        const string = textbox.value;
+        parent.postMessage({
+            pluginMessage: {
+                type: 'order',
+                string
+            }
+        }, '*')
+    }
+
+    document.getElementById('num').onclick = () => {
+        parent.postMessage({
+            pluginMessage: {
+                type: 'num'
+            }
+        }, '*')
+    }
+
+    document.getElementById('percentage').onclick = () => {
+        parent.postMessage({
+            pluginMessage: {
+                type: 'percentage'
+            }
+        }, '*')
+    }
+</script>
+
+
+<!-- var trigger = document.getElementsByClassName("trigger");
+var i;
+for (i = 0; i < trigger.length; i++) {
+  trigger[i].addEventListener("click", function() {
+      var ui = this.nextElementSibling;
+      if (ui.style.display === "block") {
+          ui.style.display = "none";
+      } else {
+          ui.style.display = "block";
+      }
+  });
+}  -->
